@@ -1,0 +1,8 @@
+.venv/
+.idea/
+__pycache__/
+test/
+clean-Data/
+txt-Data/
+raw-Data/
+.env
