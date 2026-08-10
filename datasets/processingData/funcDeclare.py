@@ -2,12 +2,22 @@
 def truncate_file(starting_line: int, ending_line: int, name_of_file: str):
     with open('../raw-Data/Video_Games.txt', 'r') as f:
         counter = 0
+
+        match starting_line:
+            case 0:
+                i = 0
+            case _:
+                i = 1
+
         for line in f:
-            with open(f"../txtData/{name_of_file}.txt", 'a+') as f:
-                f.writelines(line)
                 counter += 1
-                if counter == ending_line - 1:
-                    break
+                if starting_line <= counter and counter < ending_line - i:
+                    with open(f"../txtData/{name_of_file}.txt", 'a+') as f:
+                        f.writelines(line)
+                        if counter == ending_line - 1:
+                            break
+                else:
+                    continue
 
 #clearing out all the unneeded lines
 def init_clean():
