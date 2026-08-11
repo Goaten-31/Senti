@@ -11,13 +11,14 @@ def truncate_file(starting_line: int, ending_line: int, name_of_file: str):
 
         for line in f:
                 counter += 1
-                if starting_line <= counter and counter < ending_line - i:
-                    with open(f"../txtData/{name_of_file}.txt", 'a+') as f:
+                if starting_line <= counter:
+                    with open(f"../truncatedData/{name_of_file}.txt", 'a') as f:
                         f.writelines(line)
-                        if counter == ending_line - 1:
+                        if counter >= ending_line and not line.strip():
                             break
                 else:
                     continue
+    print(counter + 1)
 
 #clearing out all the unneeded lines
 def init_clean():
