@@ -1,24 +1,18 @@
 #truncating the file into smaller sizes
 def truncate_file(starting_line: int, ending_line: int, name_of_file: str):
-    with open('../raw-Data/Video_Games.txt', 'r') as f:
+    with open('../raw-Data/Video_Games.txt', 'r') as outerFile:
         counter = 0
 
-        match starting_line:
-            case 0:
-                i = 0
-            case _:
-                i = 1
-
-        for line in f:
+        for line in outerFile:
                 counter += 1
                 if starting_line <= counter:
-                    with open(f"../truncatedData/{name_of_file}.txt", 'a') as f:
-                        f.writelines(line)
+                    with open(f"../truncatedData/{name_of_file}.txt", 'a') as innerFile:
+                        innerFile.writelines(line)
                         if counter >= ending_line and not line.strip():
                             break
                 else:
                     continue
-    print(counter + 1)
+    return counter + 1
 
 #clearing out all the unneeded lines
 def init_clean():

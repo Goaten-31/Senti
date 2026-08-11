@@ -19,7 +19,8 @@ while choice_repeat not in stop_repeat:
 
     name_of_file = input("Enter the name of the file: ")
 
-    truncate_file(starting_line, ending_line, name_of_file)
+    next_staring_line = truncate_file(starting_line, ending_line, name_of_file)
+    print(f"The next starting line is: {next_staring_line}")
     choice_repeat = input("Do you want to truncate another file? (y/n): ")
 
 # try:
