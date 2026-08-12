@@ -33,8 +33,8 @@ def full_check(s):
     return False
 
 def tooled_init_clean():
-    with open('../datasets/raw-Data/Video_Games.txt', 'r') as infile, open('testingDump/testingloop0.txt', 'w') as outfile:
-        part = it.islice(infile, 100)
+    with open('../raw-Data/Video_Games.txt', 'r') as infile, open('../workingData/initCleaned.txt', 'w') as outfile:
+        part = it.islice(infile, 5100359)
         outfile.writelines(it.filterfalse(full_check, part))
 
 #removing the labels
