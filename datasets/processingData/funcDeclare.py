@@ -1,3 +1,6 @@
+import itertools as it
+from concurrent.futures import ThreadPoolExecutor
+
 #truncating the file into smaller sizes
 def truncate_file(starting_line: int, ending_line: int, name_of_file: str):
     with open('../raw-Data/Video_Games.txt', 'r') as outerFile:
@@ -14,16 +17,25 @@ def truncate_file(starting_line: int, ending_line: int, name_of_file: str):
                     continue
     return counter + 1
 
+
+def truncate_file_tooled(input_file: str, output_file: str):
+    with open(f'../raw-Data/{input_file}.txt', 'r') as infile, open(f'../txtData/{output_file}.txt', 'w+') as outfile:
+        for line_number, line in enumerate(infile, start=1):
+            outfile.write(line)
+
+            if line_number >= 100 and not line.strip():
+                break
+
 #clearing out all the unneeded lines
-def init_clean():
-    with open('../raw-Data/Video_Games.txt', 'r') as f:
-        for line in f:
-            if 'profileName' in line or 'userId' in line or 'productId' in line:
-                continue
-            if 'review/time' in line:
-                continue
-            with open('txtData/preProc0.txt', 'a+') as f:
-                f.writelines(line)
+def full_check(s):
+    if 'profileName' in s or 'userId' in s or 'productId' in s or 'review/time' in s:
+        return True
+    return False
+
+def tooled_init_clean():
+    with open('../datasets/raw-Data/Video_Games.txt', 'r') as infile, open('testingDump/testingloop0.txt', 'w') as outfile:
+        part = it.islice(infile, 100)
+        outfile.writelines(it.filterfalse(full_check, part))
 
 #removing the labels
 def second_clean():
