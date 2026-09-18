@@ -2,10 +2,5 @@
 .idea/
 __pycache__/
 tests/
-clean-Data/
-txtData/
-raw-Data/
-.env
+datasets/
 ProjectNotes.txt
-truncatedData/
-workingData/
