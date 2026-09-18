@@ -63,6 +63,30 @@ class Loc_lib{
             infile.close();
             outfile.close();
         }
+
+        string remove_spaces(string line){
+            int j = 0;
+            for(int i = 0; i < line.length(); ++i){
+                if (line[i] != ' ') {
+                    line[j++] = line[i];
+                }
+            }
+            line[j] = '\0';
+            return line;
+        }
+
+        void remove_newlines(){
+            std::ifstream infile;
+            std::ofstream outfile;
+            string line;
+
+            while (std::getline(infile, line)) {
+                if () {
+                
+                }
+            }
+        }
+        
         };
 
 extern "C" {

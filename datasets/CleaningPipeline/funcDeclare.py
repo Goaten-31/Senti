@@ -1,5 +1,8 @@
+from ast import While
 import itertools as it
-from CleaningPipeline.cppLib.CppLib import *
+import sqlite3 as db
+import os
+import loctools as lt
 
 #truncating the file into smaller sizes
 def truncate_file(starting_line: int, ending_line: int, name_of_file: str):
@@ -54,7 +57,7 @@ def second_clean():
 #Here the paths should be written explicitly, but I'll get to it
 def remove_title_wrapper(input_file_path, output_file_path):
     try:
-        remove_title(input_file_path, output_file_path)
+        lt.remove_title(input_file_path, output_file_path)
         return 0;
     except Exception as e:
         print(f"Error in the first step of processing. Details: {e}")
@@ -99,7 +102,7 @@ def fifth_clean():
                 f.writelines(line)
 
 def remove_uneeded_commas():
-    remove_commas()
+    lt.remove_commas()
 
 #writing the cleaned data into the csv
 def into_csv():
@@ -109,3 +112,34 @@ def into_csv():
         for line in f:
             with open('../cleanData/workingDataset.csv', 'a+') as f:
                 f.writelines(line)
+
+def create_db(file_path):
+    
+    db_name = "database.db"
+    
+    conn = db.connect(db_name)
+
+    cur = conn.cursor()
+
+    if not os.path.isfile(db_name):
+    
+        cur.execute("""
+            CREATE TABLE titles(
+                title TEXT
+            )
+            CREATE TABLE reviews(
+                review TEXT
+            );
+            """)
+
+    with open(file_path, "w") as infile:
+        for line, index in enumerate(infile, start=1):
+            if index % 2:
+                conn.execute(f"INSERT INTO reviews VALUES {line}")
+            else:
+                conn.execute(f"INSERT INTO title VALUES {line}")
+                
+        
+    conn.commit()
+
+    conn.close()
