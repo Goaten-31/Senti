@@ -1,4 +1,3 @@
-from ast import While
 import itertools as it
 import sqlite3 as db
 import os
@@ -31,13 +30,13 @@ def truncate_file_tooled(input_file: str, output_file: str):
 
 #clearing out all the unneeded lines
 def full_check(s):
-    if 'profileName' in s or 'userId' in s or 'productId' in s or 'review/time' in s:
-        return True
-    return False
+    if 'product/title' in s or 'review/text' in s:
+        return False
+    return True
 
-def removing_unnecessary_lines():
+def removing_unnecessary_lines(input_file_path, output_file_path):
     try:
-        with open('../raw-Data/Video_Games.txt', 'r') as infile, open('../workingData/initCleaned.txt', 'w') as outfile:
+        with open(input_file_path, 'r') as infile, open(output_file_path, 'w') as outfile:
             part = it.islice(infile, 5100359)
             outfile.writelines(it.filterfalse(full_check, part))
         return 0;
@@ -45,73 +44,15 @@ def removing_unnecessary_lines():
         print(f"Error in the first step of processing. Details: {e}")
         return 1;
 
-#removing the labels
-def second_clean():
-    with open('txtData/preProc0.txt', 'r') as f:
-        for line in f:
-            if ':' in line:
-                line = line[line.index(':')+1:]
-            with open('txtData/preProc1.txt', 'a+') as f:
-                f.writelines(line)
-
 #Here the paths should be written explicitly, but I'll get to it
-def remove_title_wrapper(input_file_path, output_file_path):
+def remove_the_titles():
     try:
-        lt.remove_title(input_file_path, output_file_path)
+        lt.remove_titles()
         return 0;
     except Exception as e:
         print(f"Error in the first step of processing. Details: {e}")
         return 1;
 
-#first reformat to turn into a csv
-def third_clean():
-    with open('txtData/preProc1.txt', 'r') as f:
-        for line in f:
-            if line.strip() == '':
-                line = line.replace('\n', '\n')
-            else:
-                line = line.replace('\n', ',')
-            with open('txtData/preProc2.txt', 'a+') as f:
-                f.writelines(line)
-
-#second reformat
-def fourth_clean():
-    with open('txtData/preProc2.txt', 'r') as f:
-        for line in f:
-            line_list = list(line)
-            line_list.pop(-2)
-            line = "".join(line_list)
-            with open('txtData/preProc3.txt', 'a+') as f:
-                f.writelines(line)
-
-def get_sixth_comma_index(text):
-    index = -1
-    for _ in range(5):
-        index = text.find(',', index + 1)
-        if index == -1:
-            return -1
-    return index
-
-#removing all the unneeded commas, now file is ready for csv
-def fifth_clean():
-    with open('txtData/preProc3.txt', 'r') as f:
-        for line in f:
-            new_line = line[get_sixth_comma_index(line):].replace(',', '')
-            line = line[:get_sixth_comma_index(line)] + ',' + new_line
-            with open('txtData/preProc4.txt', 'a+') as f:
-                f.writelines(line)
-
-def remove_uneeded_commas():
-    lt.remove_commas()
-
-#writing the cleaned data into the csv
-def into_csv():
-    with open('../cleanData/workingDataset.csv', 'a+') as f:
-        f.writelines('pTitle, pPrice, rHelpfulness, rScore, rSummary, rText' + '\n')
-    with open('txtData/preProc4.txt', 'r') as f:
-        for line in f:
-            with open('../cleanData/workingDataset.csv', 'a+') as f:
-                f.writelines(line)
 
 def create_db(file_path):
     

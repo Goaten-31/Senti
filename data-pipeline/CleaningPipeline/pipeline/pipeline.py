@@ -1,12 +1,19 @@
 from funcDeclare import *
+from loctools import *
 import os
 
+parentDir = "C:\\Users\\TK\\PycharmProjects\\SentiWin\\data-pipeline\\datasets\\"
 
-if 'initCleaned.txt' not in os.listdir('../workingData/'):
-    tooled_init_clean()
+bronzeData = "..\\..\\datasets\\bronzeData\\Video_Games.txt"
 
-if 'initCleaned.txt' in os.listdir('../workingData/'):
-    pass
+titledData = "..\\..\\datasets\\silverData\\titledReviews.txt"
+untitledData = "..\\..\\datasets\\silverData\\untitledReviews.txt"
+
+titled_exists = os.path.isfile(parentDir + titledData)
+untitled_exists = os.path.isfile(parentDir + untitledData)
+
+# removing_unnecessary_lines(parentDir + bronzeData, parentDir + titledData)
+remove_the_titles()
 
 # try:
 #    init_clean()
