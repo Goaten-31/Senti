@@ -1,6 +1,8 @@
 from funcDeclare import *
 from loctools import *
 import os
+import sqlite3
+import pandas as pd
 
 parentDir = "C:\\Users\\TK\\PycharmProjects\\SentiWin\\data-pipeline\\datasets\\"
 
@@ -13,7 +15,20 @@ titled_exists = os.path.isfile(parentDir + titledData)
 untitled_exists = os.path.isfile(parentDir + untitledData)
 
 # removing_unnecessary_lines(parentDir + bronzeData, parentDir + titledData)
-remove_the_titles()
+# remove_the_titles()
+
+# create_db()
+fill_database(untitledData)
+# display_table("titles")
+# 
+parentDir = "C:\\Users\\TK\\PycharmProjects\\SentiWin\\data-pipeline\\datasets\\goldData\\"
+db_name = "database.db"
+
+conn = db.connect(parentDir + db_name)
+
+df = pd.read_sql("SELECT * FROM reviews", conn)
+
+print(df.head())
 
 # try:
 #    init_clean()

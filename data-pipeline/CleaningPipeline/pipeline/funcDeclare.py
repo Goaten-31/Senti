@@ -29,16 +29,21 @@ def truncate_file_tooled(input_file: str, output_file: str):
                 break
 
 #clearing out all the unneeded lines
-def full_check(s):
+def title_review_filter(s):
     if 'product/title' in s or 'review/text' in s:
         return False
     return True
 
-def removing_unnecessary_lines(input_file_path, output_file_path):
+def title_price_score_filter(s):
+    if 'product/title' in s or 'product/price' in s or 'review/score' in s:
+        return False
+    return True
+
+def removing_unnecessary_lines(input_file_path, output_file_path, filter_function):
     try:
         with open(input_file_path, 'r') as infile, open(output_file_path, 'w') as outfile:
             part = it.islice(infile, 5100359)
-            outfile.writelines(it.filterfalse(full_check, part))
+            outfile.writelines(it.filterfalse(filter_function, part))
         return 0;
     except Exception as e:
         print(f"Error in the first step of processing. Details: {e}")
@@ -50,37 +55,65 @@ def remove_the_titles():
         lt.remove_titles()
         return 0;
     except Exception as e:
-        print(f"Error in the first step of processing. Details: {e}")
+        print(f"Error in the first step of processing. Removing Titles. Details: {e}")
         return 1;
 
+def add_the_commas():
+    try:
+        lt.add_commas()
+        return 0;
+    except Exception as e:
+        print(f"Error in the first step of processing. Adding Commas. Details: {e}")
+        return 1;
 
-def create_db(file_path):
-    
+def create_db():
+
+    parentDir = "C:\\Users\\TK\\PycharmProjects\\SentiWin\\data-pipeline\\datasets\\goldData\\"
     db_name = "database.db"
     
-    conn = db.connect(db_name)
+    conn = db.connect(parentDir + db_name)
 
     cur = conn.cursor()
 
-    if not os.path.isfile(db_name):
-    
-        cur.execute("""
-            CREATE TABLE titles(
-                title TEXT
-            )
-            CREATE TABLE reviews(
-                review TEXT
-            );
-            """)
 
-    with open(file_path, "w") as infile:
-        for line, index in enumerate(infile, start=1):
-            if index % 2:
-                conn.execute(f"INSERT INTO reviews VALUES {line}")
-            else:
-                conn.execute(f"INSERT INTO title VALUES {line}")
-                
+    conn.execute("CREATE TABLE titles(title TEXT);")
+    conn.execute("CREATE TABLE reviews(review TEXT);")
         
     conn.commit()
 
+    conn.close()
+
+def fill_database(file_path):
+    parentDir = "C:\\Users\\TK\\PycharmProjects\\SentiWin\\data-pipeline\\datasets\\goldData\\"
+    db_name = "database.db"
+    
+    conn = db.connect(parentDir + db_name)
+
+    index = 1
+    with open(file_path, "r") as infile:
+        for line in infile:
+            if index % 2:
+                conn.execute(f"INSERT INTO reviews VALUES ({line})")
+            else:
+                conn.execute(f"INSERT INTO title VALUES ({line})")
+            index += 1
+    conn.commit()
+
+    conn.close()
+
+def display_table(table_name):
+
+    parentDir = "C:\\Users\\TK\\PycharmProjects\\SentiWin\\data-pipeline\\datasets\\goldData\\"
+    db_name = "database.db"
+    
+    conn = db.connect(parentDir + db_name)
+    
+    a= conn.execute(f"PRAGMA table_info('{table_name}')")
+    
+    for i in a:
+    
+         print(i)
+
+    conn.commit()
+    
     conn.close()
