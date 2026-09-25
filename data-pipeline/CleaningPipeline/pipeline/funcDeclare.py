@@ -50,17 +50,17 @@ def removing_unnecessary_lines(input_file_path, output_file_path, filter_functio
         return 1;
 
 #Here the paths should be written explicitly, but I'll get to it
-def remove_the_titles():
+def remove_the_titles(batch : int):
     try:
-        lt.remove_titles()
+        lt.remove_titles(batch)
         return 0;
     except Exception as e:
         print(f"Error in the first step of processing. Removing Titles. Details: {e}")
         return 1;
 
-def add_the_commas():
+def add_the_commas(batch : int, reset : int):
     try:
-        lt.add_commas()
+        lt.add_commas(batch, reset)
         return 0;
     except Exception as e:
         print(f"Error in the first step of processing. Adding Commas. Details: {e}")
@@ -93,11 +93,20 @@ def fill_database(file_path):
     with open(file_path, "r") as infile:
         for line in infile:
             if index % 2:
-                conn.execute(f"INSERT INTO reviews VALUES ({line})")
+                conn.execute(
+                """
+                INSERT INTO reviews (review) VALUES (?);
+                """, (line,)
+                )
+                conn.commit()
             else:
-                conn.execute(f"INSERT INTO title VALUES ({line})")
+                conn.execute(
+                """
+                INSERT INTO title (title) VALUES (?);
+                """, (line,)
+                )
+                conn.commit()
             index += 1
-    conn.commit()
 
     conn.close()
 

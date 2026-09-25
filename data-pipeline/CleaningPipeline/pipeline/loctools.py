@@ -9,8 +9,8 @@ os.add_dll_directory(lib_path)
 
 lib = ctypes.CDLL(lib_path)
 
-def remove_titles():
-    return handle.remove_titles_function()
+def remove_titles(batch : int):
+    return handle.remove_titles_function(batch)
 
-def add_commas():
-    return handle.add_commas_function()
+def add_commas(batch :  int, reset : int):
+    return handle.add_commas_function(batch, reset)
