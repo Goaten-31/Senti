@@ -29,9 +29,11 @@ untitled_exists = os.path.isfile(parentDir + untitledData)
 # remove_the_titles()
 
 # create_db()
-fill_database(untitledData)
+# fill_database(untitledData)
 # display_table("titles")
-# 
+
+remove_the_titles(1)
+
 parentDir = "C:\\Users\\TK\\PycharmProjects\\SentiWin\\data-pipeline\\datasets\\goldData\\"
 db_name = "database.db"
 

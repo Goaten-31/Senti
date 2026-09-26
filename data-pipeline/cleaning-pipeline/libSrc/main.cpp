@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
-#include <sqlite3.h>
 
 #define TITLED_REV "../../datasets/silverData/titledReviews.txt"
 #define UNTITLED_REV "../../datasets/goldData/untitledReviews.txt"
@@ -29,9 +28,6 @@ class Loc_lib{
                     outfile.open(UNTITLED_SOCRE);
                 break;    
 
-                default:
-                    std::cout << "This option doesn't exist.";
-
             }
             
             while (std::getline(infile, line)) {
@@ -57,10 +53,6 @@ class Loc_lib{
                 case 2:
                     infile.open(TITLED_SCORE);
                     outfile.open(UNTITLED_SOCRE);
-                break;
-                
-                default:
-                    std::cout << "This option doesn't exist";
                 break;
             }
             
