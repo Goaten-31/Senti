@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
-
+#include <sqlite3.h>
 
 #define TITLED_REV "../../datasets/silverData/titledReviews.txt"
 #define UNTITLED_REV "../../datasets/goldData/untitledReviews.txt"
@@ -78,6 +78,10 @@ class Loc_lib{
             
             infile.close();
             outfile.close();
+            
+        }
+
+        void fill_database(){
             
         }
         };

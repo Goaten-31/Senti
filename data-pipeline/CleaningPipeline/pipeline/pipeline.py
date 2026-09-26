@@ -2,7 +2,18 @@ from funcDeclare import *
 from loctools import *
 import os
 import sqlite3
-import pandas as pd
+
+"""
+Important Note
+
+This pipeline will be finalized in the main branch
+
+Where it will be possible to run it once, and have all the data ready
+
+Currently it is prototypal and mainly used to test function output
+
+bleh :P
+"""
 
 parentDir = "C:\\Users\\TK\\PycharmProjects\\SentiWin\\data-pipeline\\datasets\\"
 
@@ -23,12 +34,6 @@ fill_database(untitledData)
 # 
 parentDir = "C:\\Users\\TK\\PycharmProjects\\SentiWin\\data-pipeline\\datasets\\goldData\\"
 db_name = "database.db"
-
-conn = db.connect(parentDir + db_name)
-
-df = pd.read_sql("SELECT * FROM reviews", conn)
-
-print(df.head())
 
 # try:
 #    init_clean()

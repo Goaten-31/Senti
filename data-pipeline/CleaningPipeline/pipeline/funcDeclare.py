@@ -83,6 +83,8 @@ def create_db():
 
     conn.close()
 
+# These functions are insanely slow, I will migrate to the C++
+
 def fill_database(file_path):
     parentDir = "C:\\Users\\TK\\PycharmProjects\\SentiWin\\data-pipeline\\datasets\\goldData\\"
     db_name = "database.db"
@@ -102,7 +104,7 @@ def fill_database(file_path):
             else:
                 conn.execute(
                 """
-                INSERT INTO title (title) VALUES (?);
+                INSERT INTO titles (title) VALUES (?);
                 """, (line,)
                 )
                 conn.commit()
