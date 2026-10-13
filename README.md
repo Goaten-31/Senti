@@ -10,4 +10,4 @@
 Early Dev: main cleaning functions finished, more currently being implemented
 - Data Sets:
   - [The raw dataset](https://snap.stanford.edu/data/web-Amazon-links.html)
-  - The working datasets will soon be added to a dedicated directory tree
+  - The working datasets are present in the datasets directory
