@@ -20,7 +20,7 @@ def truncate_file(starting_line: int, ending_line: int, name_of_file: str):
 
 
 def truncate_file_tooled(input_file: str, output_file: str, num_of_lines: int):
-    with open(f'../raw-Data/{input_file}', 'r') as infile, open(f'../txtData/{output_file}', 'w+') as outfile:
+    with open(input_file, 'r') as infile, open(output_file, 'w+') as outfile:
         for line_number, line in enumerate(infile, start=1):
             outfile.write(line)
 

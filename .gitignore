@@ -2,5 +2,5 @@
 .idea/
 __pycache__/
 tests/
-datasets/
+data-pipeline/datasets/dataDump/
 ProjectNotes.txt
