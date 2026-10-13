@@ -1,22 +1,13 @@
-# Senti: Natural language processing to label product reviews
-**A machine learning model accompanied by a semi-automated data cleaning pipeline; built to help understand customer sentiment faster and easier**
+# Senti: An all-rounder Data Science Project
+**Natural language processing, data cleaning, and data visualization**
 ## Features:
-- Natural language processing
-- Graphs to visualize customer sentiment
-- Semi-automated data cleaning pipeline
-- FastAPI used to expose the model and pipeline as endpoints
-## Stack:
-- Python 3.14
-- Pandas for data manipulation and storage
-- Numpy to speed up manipulation of number data
-- Scikit learn for ML model development
-- spaCy for natural language processing
-- Seaborn for visualization
-- FastAPI to expose the model and pipeline as endpoints
+- Natural language processing to label the sentiment of the reviews
+- Machine Learning model to group different products based on the sentiment of reviews
+- Data cleaning pipeline
+- Dashboards and charts
 ## Development:
-- Current State: 
-\
-Early Dev: pipeline finished, dataframes in development
-- Data Set:
-\
-[The raw dataset](https://snap.stanford.edu/data/web-Amazon-links.html)
+- Current State: \
+Early Dev: main cleaning functions finished, more currently being implemented
+- Data Sets:
+  - [The raw dataset](https://snap.stanford.edu/data/web-Amazon-links.html)
+  - The working datasets will soon be added to a dedicated directory tree
