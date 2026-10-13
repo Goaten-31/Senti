@@ -13,9 +13,10 @@ lib.remove_titles_function.argtypes = [ctypes.c_int]
 lib.remove_titles_function.restype = None
 
 lib.add_commas_function.argtypes = [ctypes.c_int, ctypes.c_int]
+lib.add_commas_function.restype = None
 
 def remove_titles(batch : int):
     return handle.remove_titles_function(batch)
 
-def add_commas(batch :  int, reset : int):
+def add_commas(batch : int, reset : int):
     return handle.add_commas_function(batch, reset)

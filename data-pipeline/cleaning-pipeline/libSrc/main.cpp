@@ -5,6 +5,8 @@
 
 #define TITLED_REV "../../datasets/silverData/titledReviews.txt"
 #define UNTITLED_REV "../../datasets/goldData/untitledReviews.txt"
+#define TITLED_REV_1K "../../datasets/goldData/titledReviews1k.txt"
+#define UNTITLED_REV_1K "../../datasets/goldData/untitledReviews1k.txt"
 
 #define TITLED_SCORE "../../datasets/silverData/titledScoresPrices.txt"
 #define UNTITLED_SOCRE "../../datasets/goldData/untitledScoresPrices.csv"

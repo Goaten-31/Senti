@@ -1,5 +1,4 @@
 import itertools as it
-import sqlite3 as db
 import os
 import loctools as lt
 
@@ -20,12 +19,12 @@ def truncate_file(starting_line: int, ending_line: int, name_of_file: str):
     return counter + 1
 
 
-def truncate_file_tooled(input_file: str, output_file: str):
-    with open(f'../raw-Data/{input_file}.txt', 'r') as infile, open(f'../txtData/{output_file}.txt', 'w+') as outfile:
+def truncate_file_tooled(input_file: str, output_file: str, num_of_lines: int):
+    with open(f'../raw-Data/{input_file}', 'r') as infile, open(f'../txtData/{output_file}', 'w+') as outfile:
         for line_number, line in enumerate(infile, start=1):
             outfile.write(line)
 
-            if line_number >= 100 and not line.strip():
+            if line_number >= num_of_lines and not line.strip():
                 break
 
 #clearing out all the unneeded lines
@@ -40,91 +39,53 @@ def title_price_score_filter(s):
     return True
 
 def removing_unnecessary_lines(input_file_path, output_file_path, filter_function):
+    match filter_function:
+        case 1:
+            filter_function = title_review_filter
+        case 2:
+            filter_function = title_price_score_filter
     try:
         with open(input_file_path, 'r') as infile, open(output_file_path, 'w') as outfile:
             part = it.islice(infile, 5100359)
             outfile.writelines(it.filterfalse(filter_function, part))
-        return 0;
+        return 0
     except Exception as e:
         print(f"Error in the first step of processing. Details: {e}")
-        return 1;
+        return 1
+
+def pyremove_titles(input_file_path, output_file_path):
+    with open(input_file_path, 'r') as infile, open(output_file_path, 'w') as outfile:
+        for line in infile:
+            outfile.write(line[line.index(' ') + 1: ])
+
+def pycsv_ready(input_file_path, output_file_path, *args):
+    with open(input_file_path, 'r') as infile, open(output_file_path, 'w') as outfile:
+        for i, arg in enumerate(args, start=1):
+            if i % len(args) == 0:
+                outfile.write(f"{arg}," + '\n')
+            else:
+                outfile.write(f"{arg},")
+        for line_index, line in enumerate(infile, start=1):
+            line = line.replace('\n', ',')
+            if line_index % len(args) == 0:
+                line = line.replace('"', '')
+                outfile.write(line.replace(',', ';') + '\n')
+            else:
+                outfile.write(line)
 
 #Here the paths should be written explicitly, but I'll get to it
 def remove_the_titles(batch : int):
     try:
         lt.remove_titles(batch)
-        return 0;
+        return 0
     except Exception as e:
         print(f"Error in the first step of processing. Removing Titles. Details: {e}")
-        return 1;
+        return 1
 
 def add_the_commas(batch : int, reset : int):
     try:
         lt.add_commas(batch, reset)
-        return 0;
+        return 0
     except Exception as e:
         print(f"Error in the first step of processing. Adding Commas. Details: {e}")
-        return 1;
-
-def create_db():
-
-    parentDir = "C:\\Users\\TK\\PycharmProjects\\SentiWin\\data-pipeline\\datasets\\goldData\\"
-    db_name = "database.db"
-    
-    conn = db.connect(parentDir + db_name)
-
-    cur = conn.cursor()
-
-
-    conn.execute("CREATE TABLE titles(title TEXT);")
-    conn.execute("CREATE TABLE reviews(review TEXT);")
-        
-    conn.commit()
-
-    conn.close()
-
-# These functions are insanely slow, I will migrate to the C++
-
-def fill_database(file_path):
-    parentDir = "C:\\Users\\TK\\PycharmProjects\\SentiWin\\data-pipeline\\datasets\\goldData\\"
-    db_name = "database.db"
-    
-    conn = db.connect(parentDir + db_name)
-
-    index = 1
-    with open(file_path, "r") as infile:
-        for line in infile:
-            if index % 2:
-                conn.execute(
-                """
-                INSERT INTO reviews (review) VALUES (?);
-                """, (line,)
-                )
-                conn.commit()
-            else:
-                conn.execute(
-                """
-                INSERT INTO titles (title) VALUES (?);
-                """, (line,)
-                )
-                conn.commit()
-            index += 1
-
-    conn.close()
-
-def display_table(table_name):
-
-    parentDir = "C:\\Users\\TK\\PycharmProjects\\SentiWin\\data-pipeline\\datasets\\goldData\\"
-    db_name = "database.db"
-    
-    conn = db.connect(parentDir + db_name)
-    
-    a= conn.execute(f"PRAGMA table_info('{table_name}')")
-    
-    for i in a:
-    
-         print(i)
-
-    conn.commit()
-    
-    conn.close()
+        return 1
