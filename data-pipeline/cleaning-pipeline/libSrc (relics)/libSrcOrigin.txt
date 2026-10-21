@@ -1,0 +1,3 @@
+This used to be a mini library I created in C++ for iteration and cleaning
+Now its need has been deprecated as I diminished how many rows I want to work with
+They will remain here as it was the part that made learn the most

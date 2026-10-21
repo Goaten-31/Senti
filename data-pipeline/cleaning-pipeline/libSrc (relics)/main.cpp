@@ -81,7 +81,7 @@ class Loc_lib{
         };
 
 extern "C" {
-    Loc_lib* Loc_new(){ return new Loc_lib();}
+    // Loc_lib* Loc_new(){ return new Loc_lib();}
     void remove_titles_function(Loc_lib* loc_lib, int choice){ loc_lib -> remove_titles(choice); }
     void add_commas_function(Loc_lib* loc_lib, int choice, int reset_index){ loc_lib -> add_commas(choice, reset_index); }
 }

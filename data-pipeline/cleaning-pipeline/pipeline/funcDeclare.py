@@ -1,6 +1,5 @@
 import itertools as it
-import os
-import loctools as lt
+# import loctools as lt
 
 #truncating the file into smaller sizes
 def truncate_file(starting_line: int, ending_line: int, name_of_file: str):
@@ -73,7 +72,8 @@ def pycsv_ready(input_file_path, output_file_path, *args):
             else:
                 outfile.write(line)
 
-#Here the paths should be written explicitly, but I'll get to it
+#These are relics of an ancient time
+"""
 def remove_the_titles(batch : int):
     try:
         lt.remove_titles(batch)
@@ -89,3 +89,4 @@ def add_the_commas(batch : int, reset : int):
     except Exception as e:
         print(f"Error in the first step of processing. Adding Commas. Details: {e}")
         return 1
+"""

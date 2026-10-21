@@ -1,5 +1,4 @@
 from funcDeclare import *
-from loctools import *
 import os
 
 """
