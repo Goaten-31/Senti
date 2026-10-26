@@ -21,3 +21,13 @@ pyremove_titles(titled_rev_10k, untitled_rev_10k)
 
 pycsv_ready(untitled_rev_1k, untitled_rev_Gold1k, "title", "reviews")
 pycsv_ready(untitled_rev_10k, untitled_rev_Gold10k, "title", "reviews")
+
+
+rm_unwanted_lines(bronze1k, score_price_1k, 'tiprsc')
+rm_unwanted_lines(bronze10k, score_price_10k, 'tiprsc')
+
+pyremove_titles(score_price_1k, untitled_score_1k)
+pyremove_titles(score_price_10k, untitled_score_10k)
+
+pycsv_ready(untitled_score_1k, untitled_score_Gold_1k, "title", "price", "score")
+pycsv_ready(untitled_score_10k, untitled_score_Gold_10k, "title", "price", "score")

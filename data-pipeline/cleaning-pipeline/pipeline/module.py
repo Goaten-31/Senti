@@ -1,5 +1,6 @@
 import itertools as it
 from os import path
+import os
 # import loctools as lt
 
 
@@ -80,8 +81,8 @@ def pycsv_ready(input_file_path, output_file_path, *args):
 
 # Definition of file paths
 
-
-parentDir = "C:\\Users\\TK\\PycharmProjects\\SentiWin\\data-pipeline\\datasets\\"
+init_step = os.getcwd() + os.sep + os.pardir
+parentDir = str(os.path.normpath(init_step + os.sep + os.pardir) + '/datasets/')
 
 bronzeData = parentDir + "dataDump\\Video_Games.txt"
 
@@ -109,9 +110,9 @@ untitled_rev_Gold1k = parentDir + "gold-data\\untitledRev_Gold1k.csv"
 untitled_rev_Gold10k = parentDir + "gold-data\\untitledRev_Gold10k.csv"
 untitled_rev_Gold_scnd10k = parentDir + "gold-data\\untitledRev_Gold_scnd10k.csv"
 
-untitled_score_Gold_1k = parentDir + "silver-data\\untitledScore_Gold1k.txt"
-untitled_score_Gold_10k = parentDir + "silver-data\\untitledScore_Gold10k.txt"
-untitled_score_Gold_scnd10k = parentDir + "silver-data\\untitledScore_Gold_scnd10k.txt"
+untitled_score_Gold_1k = parentDir + "gold-data\\untitledScore_Gold1k.csv"
+untitled_score_Gold_10k = parentDir + "gold-data\\untitledScore_Gold10k.csv"
+untitled_score_Gold_scnd10k = parentDir + "gold-data\\untitledScore_Gold_scnd10k.csv"
 
 titledData = "silver-data\\titledReviews.txt"
 untitledData = "silver-data\\untitledReviews.txt"
