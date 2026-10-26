@@ -2,29 +2,20 @@ import itertools as it
 # import loctools as lt
 
 #truncating the file into smaller sizes
-def truncate_file(starting_line: int, ending_line: int, name_of_file: str):
-    with open('../raw-Data/Video_Games.txt', 'r') as outerFile:
-        counter = 0
 
-        for line in outerFile:
-                counter += 1
-                if starting_line <= counter:
-                    with open(f"../truncatedData/{name_of_file}.txt", 'a') as innerFile:
-                        innerFile.writelines(line)
-                        if counter >= ending_line and not line.strip():
-                            break
-                else:
-                    continue
-    return counter + 1
-
-
-def truncate_file_tooled(input_file: str, output_file: str, num_of_lines: int):
+def truncate_file_tooled(input_file: str, output_file: str, starting_line: int, ending_line: int):
     with open(input_file, 'r') as infile, open(output_file, 'w+') as outfile:
+        
         for line_number, line in enumerate(infile, start=1):
-            outfile.write(line)
-
-            if line_number >= num_of_lines and not line.strip():
-                break
+            
+            if starting_line <= line_number and line.strip():
+                outfile.write(line)
+                
+                if line_number >= ending_line and not line.strip():
+                    break
+                    
+            else:
+                continue
 
 #clearing out all the unneeded lines
 def title_review_filter(s):
@@ -37,11 +28,11 @@ def title_price_score_filter(s):
         return False
     return True
 
-def removing_unnecessary_lines(input_file_path, output_file_path, filter_function):
+def rm_unwanted_lines(input_file_path, output_file_path, filter_function):
     match filter_function:
-        case 1:
+        case 'tirev':
             filter_function = title_review_filter
-        case 2:
+        case 'tiprsc':
             filter_function = title_price_score_filter
     try:
         with open(input_file_path, 'r') as infile, open(output_file_path, 'w') as outfile:
@@ -49,23 +40,26 @@ def removing_unnecessary_lines(input_file_path, output_file_path, filter_functio
             outfile.writelines(it.filterfalse(filter_function, part))
         return 0
     except Exception as e:
-        print(f"Error in the first step of processing. Details: {e}")
+        print(f"Error in rm_unwanted_lines. Details: {e}")
         return 1
 
 def pyremove_titles(input_file_path, output_file_path):
     with open(input_file_path, 'r') as infile, open(output_file_path, 'w') as outfile:
         for line in infile:
-            outfile.write(line[line.index(' ') + 1: ])
+            outfile.writelines(line[line.index(' ') + 1: ])
 
 def pycsv_ready(input_file_path, output_file_path, *args):
     with open(input_file_path, 'r') as infile, open(output_file_path, 'w') as outfile:
+        
         for i, arg in enumerate(args, start=1):
             if i % len(args) == 0:
                 outfile.write(f"{arg}," + '\n')
             else:
                 outfile.write(f"{arg},")
+                
         for line_index, line in enumerate(infile, start=1):
             line = line.replace('\n', ',')
+            
             if line_index % len(args) == 0:
                 line = line.replace('"', '')
                 outfile.write(line.replace(',', ';') + '\n')
