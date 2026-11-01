@@ -1,9 +1,6 @@
-import polars as pl
-import numpy as np
+import spacy as sp
 
-csv_path = ""
-
-df = pl.read_csv(csv_path)
+# project halted for a bit
 
 if __name__ == "__main__":
     pass
